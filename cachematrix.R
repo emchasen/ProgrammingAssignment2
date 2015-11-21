@@ -3,38 +3,37 @@
 
 ## Write a short comment describing this function
 
-makeCacheMatrix <- function(x = matrix()) {
-        function(x = matrix()) {
+makeCacheMatrix <- function(x = numeric()) {
                 s <- NULL
-                set <- function(y) {
-                        x <<- y
-                        s <<- NULL
-                }
                 get <- function() x
-                setinv <- function(solve) s <<- solve
-                getinv <- function() s
-                list(set = set, get = get,
-                     setinv = setinv,
-                     getinv = getinv)
-        }
-
+                #setinv <- function(solution) s <<- solution
+                #getinv <- function() s
+                list(get = get
+                     #setinv = setinv,
+                     #getinv = getinv
+                     )
 }
 
+jcmake <- function(y = numeric()) {
+        get <- function() y
+        set <- function(value) {
+                y <<- value
+        }
+        list(get = get, set = set)
+}
 
 ## Write a short comment describing this function
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-        m <- x$getinv()
+        s <- x$getinv() #this is where my problem is
         if(!is.null(s)) {
                 message("getting cached data")
                 return(s)
         }
         data <- x$get()
-        m <- solve(data, ...)
+        s <- solve(data, ...)
         x$setinv(s)
         s
 }
-}
 
-# This is a change
